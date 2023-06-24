@@ -1,5 +1,6 @@
-package com.example.petapp
+package com.example.petapp.firstScreen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,19 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import com.example.petapp.core.BaseFragment
+import com.example.petapp.R
+import com.example.petapp.ShowFragment
+import com.example.petapp.secondScreen.SecondFragment
 
 class MainFragment : BaseFragment<MainFragmentViewModel>() {
-    override val viewModelClass: Class<MainFragmentViewModel> =MainFragmentViewModel::class.java
+    override val viewModelClass: Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
+    private var showFragment: ShowFragment = ShowFragment.Empty()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        showFragment = context as ShowFragment
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,5 +45,14 @@ class MainFragment : BaseFragment<MainFragmentViewModel>() {
         view.findViewById<Button>(R.id.button).setOnClickListener {
             viewModel.changeText()
         }
+        view.findViewById<Button>(R.id.nav_button).setOnClickListener {
+            showFragment.show(SecondFragment.getInstance())
+        }
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        showFragment = ShowFragment.Empty()
     }
 }
