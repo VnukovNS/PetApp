@@ -12,11 +12,17 @@ import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseFragment
 import com.example.petapp.R
 import com.example.petapp.ShowFragment
+import com.example.petapp.databinding.FragmentMainBinding
 import com.example.petapp.secondScreen.SecondFragment
 
-class MainFragment : BaseFragment<MainFragmentViewModel>() {
+class MainFragment : BaseFragment<MainFragmentViewModel, FragmentMainBinding>() {
     override val viewModelClass: Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
     private var showFragment: ShowFragment = ShowFragment.Empty()
+
+    override fun fragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

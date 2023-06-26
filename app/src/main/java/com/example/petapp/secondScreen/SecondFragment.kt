@@ -4,42 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseFragment
-import com.example.petapp.R
+import com.example.petapp.databinding.SecondFragmentBinding
 
-class SecondFragment : BaseFragment<SecondFragmentViewModel>() {
+class SecondFragment : BaseFragment<SecondFragmentViewModel, SecondFragmentBinding>() {
     override val viewModelClass: Class<SecondFragmentViewModel> =
         SecondFragmentViewModel::class.java
 
-    companion object {
-        fun getInstance() : SecondFragment = SecondFragment()
-    }
-
-    override fun onCreateView(
+    override fun fragmentBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.second_fragment, container, false)
+        container: ViewGroup?
+    ): SecondFragmentBinding = SecondFragmentBinding.inflate(inflater, container, false)
+
+    companion object {
+        fun getInstance(): SecondFragment = SecondFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
-        val firstText = view.findViewById<TextView>(R.id.first_text)
 
-        val firstTextObserver = Observer<String> {
-            firstText.text = it
+        // todo сделать стейты с загрузкой, (loading, error)
+        binding.progressBar.visibility = View.GONE
+
+        val titleObserver = Observer<String> {
+            binding.newsTitle.text = it
         }
-
-        viewModel.currentText.observe(viewLifecycleOwner, firstTextObserver)
-
-        view.findViewById<Button>(R.id.button).setOnClickListener {
-            viewModel.changeText()
+        viewModel.titleText.observe(viewLifecycleOwner, titleObserver)
+        binding.button.setOnClickListener {
+            viewModel.getAutomobileNews()
         }
+        val descriptionObserver = Observer<String> {
+            binding.newsDescription.text = it
+        }
+        viewModel.descriptionText.observe(viewLifecycleOwner, descriptionObserver)
     }
 }
