@@ -1,4 +1,4 @@
-package com.example.petapp.core.cloud.news
+package com.example.petapp.data.news
 
 import com.example.petapp.data.NewsModel
 import retrofit2.Call

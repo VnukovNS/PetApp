@@ -32,7 +32,7 @@ class SecondFragment : BaseFragment<SecondFragmentViewModel, SecondFragmentBindi
         }
         viewModel.titleText.observe(viewLifecycleOwner, titleObserver)
         binding.button.setOnClickListener {
-            viewModel.getAutomobileNews()
+            viewModel.getNews()
         }
         val descriptionObserver = Observer<String> {
             binding.newsDescription.text = it

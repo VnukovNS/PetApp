@@ -25,7 +25,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="click me to change text"/>
+        android:text="@string/click_me_to_change_text"/>
 
     <Button
         android:id="@+id/nav_button"
