@@ -1,27 +1,42 @@
 package com.example.petapp.secondScreen
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseViewModel
+import com.example.petapp.core.Communication
+import com.example.petapp.core.Init
 import com.example.petapp.data.NewsResult
 import com.example.petapp.domain.NewsInteractor
 
 
-class SecondFragmentViewModel(private val interactor : NewsInteractor = NewsInteractor.Base()) : BaseViewModel() {
-    private val _titleText: MutableLiveData<String> =
-        MutableLiveData<String>("second fragment initial text")
-    val titleText: LiveData<String> = _titleText
-    private val _descriptionText: MutableLiveData<String> =
-        MutableLiveData<String>("second fragment initial text")
-    val descriptionText: LiveData<String> = _descriptionText
+class SecondFragmentViewModel(
+    private val interactor: NewsInteractor = NewsInteractor.Base(),
+    private val communication: Communication.Mutable<NewsUi>
+    = NewsCommunication.Base()
+) :
+    BaseViewModel(), Init, Communication.Observe<NewsUi> {
+
+    override fun init() {
+//        handle({interactor.getNews("automobile")}, {
+//            // todo init recyclerAdapter
+//        })
+    }
 
     fun getNews() = handle({ interactor.getNews("automobile") }, {
         if (it is NewsResult.Success) {
-            _titleText.value = it.news[0].title
-            _descriptionText.value = it.news[0].content
-        } else if ( it is NewsResult.Error) {
-            _titleText.value = it.message
-            _descriptionText.value = ""
+            // todo сделать еще один маппинг
+            val ui: MutableList<NewsPreviewUi> = mutableListOf()
+            for (newsData in it.news) {
+                // todo потом добавить битмапу (глайд)
+                ui.add(NewsPreviewUi.Base(newsData.title, newsData.content))
+            }
+            communication.map(NewsUi.Initial(ui))
+        } else if (it is NewsResult.Error) {
+            Log.e("vniks", "error: ${it.message}")
         }
     })
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<NewsUi>) =
+        communication.observe(owner, observer)
 }

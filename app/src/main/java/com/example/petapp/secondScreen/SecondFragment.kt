@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseFragment
 import com.example.petapp.databinding.SecondFragmentBinding
 
@@ -24,19 +23,37 @@ class SecondFragment : BaseFragment<SecondFragmentViewModel, SecondFragmentBindi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // todo сделать стейты с загрузкой, (loading, error)
-        binding.progressBar.visibility = View.GONE
 
-        val titleObserver = Observer<String> {
-            binding.newsTitle.text = it
+//        binding.progressBar.visibility = View.GONE
+
+        val adapter = NewsAdapter.Base(
+            object : NewsListener {
+                override fun openFullNews(item: NewsPreviewUi) {
+                    // сделать переход на следующий фрагмент
+                }
+            }
+
+        )
+        // todo сделать стейты с загрузкой, (loading, error)
+        viewModel.observe(this) {
+            it.map(adapter, requireContext())
         }
-        viewModel.titleText.observe(viewLifecycleOwner, titleObserver)
+        with(binding) {
+            recycler.adapter = adapter
+            progressBar.visibility = View.GONE
+        }
+
+//        val titleObserver = Observer<String> {
+//            binding.newsItem.setTitle(it)
+//        }
+//        val descriptionObserver = Observer<String> {
+//            binding.newsItem.setContent(it)
+//        }
+//        viewModel.titleText.observe(viewLifecycleOwner, titleObserver)
+//        viewModel.descriptionText.observe(viewLifecycleOwner, descriptionObserver)
+
         binding.button.setOnClickListener {
             viewModel.getNews()
         }
-        val descriptionObserver = Observer<String> {
-            binding.newsDescription.text = it
-        }
-        viewModel.descriptionText.observe(viewLifecycleOwner, descriptionObserver)
     }
 }
