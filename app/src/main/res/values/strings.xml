@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PetApp</string>
+    <string name="click_me_to_change_text">click me to change text</string>
+    <string name="no_connection">no internet connection</string>
+    <string name="service_unavailable">service unavailable</string>
+    <string name="default_error">something go wrong</string>
 </resources>
