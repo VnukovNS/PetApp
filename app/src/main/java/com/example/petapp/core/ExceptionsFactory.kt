@@ -6,7 +6,7 @@ import com.example.petapp.domain.ServiceUnavailableException
 interface ExceptionsFactory {
     fun handle(e: Exception): String
 
-    class Base(private val resources: ManageResources = ManageResources.Base()) :
+    class Base(private val resources: ManageResources) :
         ExceptionsFactory {
         override fun handle(e: Exception): String = when (e) {
             is NoConnectionException -> Failures.NoConnection(resources).getMessage()
@@ -14,5 +14,4 @@ interface ExceptionsFactory {
             else -> Failures.DefaultError(resources).getMessage()
         }
     }
-
 }

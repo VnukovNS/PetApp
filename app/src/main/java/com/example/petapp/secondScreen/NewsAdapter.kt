@@ -10,7 +10,8 @@ import com.example.petapp.databinding.CustomNewsPreviewBinding
 
 interface NewsAdapter : Mapper.Unit<List<NewsPreviewUi>> {
 
-    class Base(private val clickListener: NewsListener) : RecyclerView.Adapter<NewsViewHolder>(), NewsAdapter {
+    class Base(private val clickListener: NewsListener) : RecyclerView.Adapter<NewsViewHolder>(),
+        NewsAdapter {
 
         private val list = mutableListOf<NewsPreviewUi>()
 

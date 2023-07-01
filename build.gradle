@@ -20,4 +20,5 @@ ext {
     extJunitVersion = '1.1.5'
     espressoCoreVersion = '3.5.1'
     roomVersion = '2.4.2'
+    koinVersion = '3.4.1'
 }

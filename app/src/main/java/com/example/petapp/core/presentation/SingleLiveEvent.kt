@@ -1,4 +1,4 @@
-package com.example.petapp.core
+package com.example.petapp.core.presentation
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

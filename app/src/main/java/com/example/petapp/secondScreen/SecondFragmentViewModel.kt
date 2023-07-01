@@ -4,16 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseViewModel
-import com.example.petapp.core.Communication
+import com.example.petapp.core.presentation.Communication
 import com.example.petapp.core.Init
 import com.example.petapp.data.NewsResult
 import com.example.petapp.domain.NewsInteractor
 
 
 class SecondFragmentViewModel(
-    private val interactor: NewsInteractor = NewsInteractor.Base(),
+    private val interactor: NewsInteractor,
     private val communication: Communication.Mutable<NewsUi>
-    = NewsCommunication.Base()
 ) :
     BaseViewModel(), Init, Communication.Observe<NewsUi> {
 

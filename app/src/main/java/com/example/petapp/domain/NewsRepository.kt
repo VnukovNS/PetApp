@@ -13,7 +13,7 @@ interface NewsRepository {
 
     class Base(
         private val cloudDataSource: NewsCloudDataSource,
-        private val dispatchers: DispatchersList = DispatchersList.Base()
+        private val dispatchers: DispatchersList
     ) : NewsRepository {
         override suspend fun getNews(category: String): List<NewsData> = withContext(dispatchers.io()) {
             try {

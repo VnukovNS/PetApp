@@ -14,9 +14,10 @@ import com.example.petapp.R
 import com.example.petapp.ShowFragment
 import com.example.petapp.databinding.FragmentMainBinding
 import com.example.petapp.secondScreen.SecondFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : BaseFragment<MainFragmentViewModel, FragmentMainBinding>() {
-    override val viewModelClass: Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
+class MainFragment : BaseFragment<FragmentMainBinding>() {
+    private val viewModel by viewModel<MainFragmentViewModel>()
     private var showFragment: ShowFragment = ShowFragment.Empty()
 
     override fun fragmentBinding(
@@ -54,7 +55,6 @@ class MainFragment : BaseFragment<MainFragmentViewModel, FragmentMainBinding>() 
         view.findViewById<Button>(R.id.nav_button).setOnClickListener {
             showFragment.show(SecondFragment.getInstance())
         }
-
     }
 
     override fun onDetach() {

@@ -1,7 +1,7 @@
 package com.example.petapp.core.cloud
 
 interface MakeService {
-    fun <T: Any> service(clazz: Class<T>): T
+    fun <T : Any> service(clazz: Class<T>): T
 
     abstract class Abstract(
         private val retrofitBuilder: ProvideRetrofitBuilder,

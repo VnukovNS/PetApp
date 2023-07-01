@@ -1,17 +1,23 @@
 package com.example.petapp.core
 
 import android.app.Application
+import com.example.petapp.core.di.appModule
+import com.example.petapp.core.di.domainModule
+import com.example.petapp.core.di.vmModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class App : Application() {
 
-    // todo по-хорошему надо убрать эту дичь и сделать через DI
-    companion object {
-        private var singleton: App? = null
-        fun getInstance(): App = singleton!!
-    }
-
     override fun onCreate() {
         super.onCreate()
-        singleton = this
+
+        startKoin {
+            androidLogger(Level.DEBUG)
+            androidContext(this@App)
+            modules(listOf(appModule, domainModule, vmModule))
+        }
     }
 }

@@ -1,13 +1,8 @@
 package com.example.petapp.data
 
-//interface NewsModel {
-//
-//    interface Mapper<T>{
-//        fun map(title: String, content: String, imageUrl: String)
-//    }
 
-//    fun <T> map(mapper: Mapper<T>): T
-    data class NewsModel(
+// TODO: сделать маппинг
+data class NewsModel(
         val category: String = "",
         val data: MutableList<NewsData>
     )
@@ -20,7 +15,3 @@ package com.example.petapp.data
         val readMoreUrl: String = "",
         val title: String = ""
     )
-//    {
-//        override fun <T> map(mapper: Mapper<T>): T = mapper.map(title, content, imageUrl)
-//    }
-//}

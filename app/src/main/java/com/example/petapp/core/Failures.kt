@@ -6,9 +6,9 @@ import com.example.petapp.R
 interface Failures {
     fun getMessage(): String
 
-    abstract class Abstract(private val resources: ManageResources): Failures {
+    abstract class Abstract(private val resources: ManageResources) : Failures {
         @StringRes
-        protected abstract fun  getMessageResId(): Int
+        protected abstract fun getMessageResId(): Int
 
         override fun getMessage(): String = resources.string(getMessageResId())
     }

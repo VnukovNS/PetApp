@@ -1,12 +1,15 @@
 package com.example.petapp
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.petapp.core.BaseActivity
 import com.example.petapp.firstScreen.MainFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<MainActivityViewModel>(), ShowFragment {
-    override val viewModelClass: Class<MainActivityViewModel> = MainActivityViewModel::class.java
+class MainActivity : AppCompatActivity(), ShowFragment {
+
+    // пока что не нужна, скорее всего в нее уйдет навигация
+    private val viewModel by viewModel<MainActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
