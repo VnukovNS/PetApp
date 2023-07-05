@@ -4,4 +4,6 @@
     <string name="no_connection">no internet connection</string>
     <string name="service_unavailable">service unavailable</string>
     <string name="default_error">something go wrong</string>
+    <string name="automobile_news">automobile news</string>
+    <string name="business_news">business news</string>
 </resources>

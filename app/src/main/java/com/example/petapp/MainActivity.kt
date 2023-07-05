@@ -1,25 +1,26 @@
 package com.example.petapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.example.petapp.core.BaseActivity
-import com.example.petapp.firstScreen.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.example.petapp.databinding.ActivityMainBinding
+import com.example.petapp.chooseCategoryScreen.presentation.FirstScreen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<MainActivityViewModel>(), ShowFragment {
-    override val viewModelClass: Class<MainActivityViewModel> = MainActivityViewModel::class.java
+class MainActivity : AppCompatActivity() {
+
+    // пока что не нужна, скорее всего в нее уйдет навигация
+    private val viewModel by viewModel<MainActivityViewModel.Base>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
+        viewModel.observe(this){
+            it.navigate(supportFragmentManager, binding.container.id)
+        }
 
         if (savedInstanceState == null) {
-            NavigationStrategy.ReplaceWOBackStack(MainFragment())
-                .navigate(supportFragmentManager, R.id.container)
+            viewModel.navigate(FirstScreen)
         }
     }
-
-    // todo перенести навигацию
-    override fun show(fragment: Fragment) =
-        NavigationStrategy.Replace(fragment).navigate(supportFragmentManager, R.id.container)
-
 }

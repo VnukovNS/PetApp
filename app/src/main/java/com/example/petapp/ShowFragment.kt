@@ -2,10 +2,10 @@ package com.example.petapp
 
 import androidx.fragment.app.Fragment
 
-interface ShowFragment{
+interface ShowFragment {
     fun show(fragment: Fragment)
 
-    class Empty(): ShowFragment {
+    class Empty() : ShowFragment {
         override fun show(fragment: Fragment) {
             return Unit
         }
