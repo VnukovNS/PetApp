@@ -3,7 +3,7 @@ package com.example.petapp.core.presentation
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.petapp.core.Mapper
+import com.example.petapp.core.domain.Mapper
 
 interface Communication {
 
