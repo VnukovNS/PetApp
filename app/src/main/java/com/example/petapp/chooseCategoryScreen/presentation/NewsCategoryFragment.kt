@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import com.example.petapp.core.presentation.BaseFragment
-import com.example.petapp.R
 import com.example.petapp.databinding.FragmentMainBinding
 import com.example.petapp.newsListScreen.presentation.NewsScreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,7 +19,6 @@ class NewsCategoryFragment : BaseFragment<FragmentMainBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
         binding.automobileButton.setOnClickListener {
             viewModel.chooseCategory("automobile")
             viewModel.navigate(NewsScreen)
@@ -30,5 +27,13 @@ class NewsCategoryFragment : BaseFragment<FragmentMainBinding>() {
             viewModel.chooseCategory("business")
             viewModel.navigate(NewsScreen)
         }
+
+        viewModel.observe(this){
+            it.blockButtons(binding.automobileButton, requireContext())
+            it.blockButtons(binding.businessButton, requireContext())
+            it.showProgressBar(binding.progressBar, requireContext())
+        }
+
+        viewModel.init()
     }
 }
