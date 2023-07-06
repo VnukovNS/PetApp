@@ -4,16 +4,19 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.petapp.chooseCategoryScreen.data.ChooseCategory
 import com.example.petapp.core.BaseViewModel
-import com.example.petapp.core.presentation.Communication
-import com.example.petapp.core.presentation.Navigate
-import com.example.petapp.core.presentation.NavigationCommunication
-import com.example.petapp.core.presentation.Screen
+import com.example.petapp.core.presentation.*
 import com.example.petapp.newsListScreen.domain.NewsInteractor
 import com.example.petapp.newsListScreen.data.cache.NewsList
 import com.example.petapp.newsListScreen.NewsUi
 import com.example.petapp.newsListScreen.NewsUiErrorMapper
 
 interface NewsListViewModel : Navigate {
+
+    fun observeError(owner: LifecycleOwner, observer: Observer<String>)
+
+    fun saveNewsDataId(id: Int)
+
+    fun init(isFirstInit: Boolean)
 
     class Base(
         private val interactor: NewsInteractor,
@@ -26,7 +29,7 @@ interface NewsListViewModel : Navigate {
     ) :
         BaseViewModel(), Communication.Observe<NewsUi>, NewsListViewModel {
 
-        fun init(isFirstInit: Boolean) {
+        override fun init(isFirstInit: Boolean) {
             if (isFirstInit) {
                 // мб делать хэндл в интеракторе?
                 handle({ interactor.getNews(data.read()) }, { result ->
@@ -44,10 +47,10 @@ interface NewsListViewModel : Navigate {
         override fun observe(owner: LifecycleOwner, observer: Observer<NewsUi>) =
             communication.observe(owner, observer)
 
-        fun observeError(owner: LifecycleOwner, observer: Observer<String>) =
+        override fun observeError(owner: LifecycleOwner, observer: Observer<String>) =
             errorCommunication.observe(owner, observer)
 
-        fun saveNewsDataId(id: Int) {
+        override fun saveNewsDataId(id: Int) {
             newsListData.saveId(id)
         }
 

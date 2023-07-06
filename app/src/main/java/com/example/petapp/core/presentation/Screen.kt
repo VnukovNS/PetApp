@@ -25,6 +25,15 @@ interface Screen : Serializable {
         }
     }
 
+    abstract class ReplaceWithBackStack(private val clazz: Class<out Fragment>) : Screen {
+        override fun navigate(manager: FragmentManager, containerId: Int) {
+            manager.beginTransaction()
+                .replace(containerId, clazz.newInstance())
+                .addToBackStack(clazz.canonicalName)
+                .commit()
+        }
+    }
+
     object Pop : Screen {
         override fun navigate(manager: FragmentManager, containerId: Int) {
             manager.popBackStack()
