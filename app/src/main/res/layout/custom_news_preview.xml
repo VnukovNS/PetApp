@@ -8,6 +8,7 @@
     android:layout_marginHorizontal="8dp">
 
 <!--    todo change default image-->
+<!--    todo поменять верстку для картинки-->
 
     <ImageButton
         android:id="@+id/news_image"

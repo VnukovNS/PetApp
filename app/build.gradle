@@ -48,6 +48,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpInterceptorVersion"
     implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
     implementation "io.insert-koin:koin-core:$rootProject.koinVersion"
+    implementation "io.coil-kt:coil-base:$rootProject.coilVersion"
 
     testImplementation "io.insert-koin:koin-test:$rootProject.koinVersion"
 

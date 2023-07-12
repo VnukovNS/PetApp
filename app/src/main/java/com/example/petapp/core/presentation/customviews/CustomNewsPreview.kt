@@ -1,4 +1,4 @@
-package com.example.petapp.core.presentation
+package com.example.petapp.core.presentation.customviews
 
 import android.content.Context
 import android.util.AttributeSet

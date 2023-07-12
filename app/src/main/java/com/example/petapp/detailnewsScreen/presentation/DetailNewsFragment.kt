@@ -21,7 +21,15 @@ class DetailNewsFragment : BaseFragment<DetailNewsFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this) {
             with(binding) {
-                it.map(progressBar, newsTitle, newsContent, newsAuthor, newsDate, newsReadMore)
+                it.map(
+                    progressBar,
+                    newsTitle,
+                    newsImage,
+                    newsContent,
+                    newsAuthor,
+                    newsDate,
+                    newsReadMore
+                )
             }
         }
 

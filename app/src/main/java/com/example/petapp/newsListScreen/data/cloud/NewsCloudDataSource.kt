@@ -9,7 +9,7 @@ class NewsCloudDataSource(private val service: NewsService, private val mapper: 
 
     fun getNewsServerModel(category: String) = service.getNews(category)
 
-    fun getNews(category: String): List<NewsData.Base> {
+    fun getNews(category: String): List<NewsDataCloud.Base> {
         try {
             val newsCloud = getNewsServerModel(category).execute().body()!!
             return newsCloud.map(mapper)

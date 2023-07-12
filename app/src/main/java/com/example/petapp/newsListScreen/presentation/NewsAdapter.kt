@@ -46,8 +46,7 @@ class NewsViewHolder(
 
     override fun bind(item: NewsPreviewUi) {
         with(binding) {
-//            item.map(newsImage, newsTitle, newsDescription)
-            item.map(newsTitle, newsDescription)
+            item.map(newsTitle, newsDescription, newsImage)
             newsImage.setOnClickListener {
                 clickListener.openFullNews(item, adapterPosition)
             }

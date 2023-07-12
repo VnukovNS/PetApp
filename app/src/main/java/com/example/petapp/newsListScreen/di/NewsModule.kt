@@ -5,7 +5,6 @@ import com.example.petapp.newsListScreen.data.cloud.NewsCloudDataSource
 import com.example.petapp.newsListScreen.data.cloud.NewsMakeService
 import com.example.petapp.newsListScreen.data.cloud.NewsService
 import com.example.petapp.newsListScreen.data.cloud.NewsCloudDataMapper
-import com.example.petapp.newsListScreen.domain.NewsDataNewsPreviewUiMapper
 import com.example.petapp.newsListScreen.domain.NewsInteractor
 import com.example.petapp.newsListScreen.data.repository.NewsRepository
 import com.example.petapp.newsListScreen.presentation.ErrorCommunication
@@ -56,15 +55,11 @@ val newsModule = module {
         NewsCloudDataMapper()
     }
 
-    factory<NewsDataNewsPreviewUiMapper> {
-        NewsDataNewsPreviewUiMapper()
-    }
-
     factory<NewsRepository> {
         NewsRepository.Base(cloudDataSource = get(), dispatchers = get())
     }
 
     factory<NewsInteractor> {
-        NewsInteractor.Base(repository = get(), failureHandler = get(), mapper = get(), newsList = get())
+        NewsInteractor.Base(repository = get(), failureHandler = get(), newsList = get(), imageDownload = get())
     }
 }

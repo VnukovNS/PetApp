@@ -1,6 +1,6 @@
 package com.example.petapp.newsListScreen.data.cloud
 
-interface NewsData {
+interface NewsDataCloud {
 
     interface Mapper<T> {
         fun map(
@@ -23,7 +23,7 @@ interface NewsData {
         //бэк иногда возвращает нуллы
         private var readMoreUrl: String? = "",
         private val title: String = ""
-    ) : NewsData {
+    ) : NewsDataCloud {
         override fun <T> map(mapper: Mapper<T>): T {
             if (readMoreUrl == null) readMoreUrl = ""
             return mapper.map(author, content, date, imageUrl, readMoreUrl!!, title)
