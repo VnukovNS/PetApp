@@ -3,7 +3,6 @@ package com.example.petapp
 import android.app.Application
 import com.example.petapp.chooseCategoryScreen.newsCategoryModule
 import com.example.petapp.core.coreModule
-import com.example.petapp.core.di.appModule
 import com.example.petapp.detailnewsScreen.detailNewsModule
 import com.example.petapp.newsListScreen.newsModule
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +20,6 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
-                    appModule,
                     newsModule,
                     detailNewsModule,
                     coreModule,
