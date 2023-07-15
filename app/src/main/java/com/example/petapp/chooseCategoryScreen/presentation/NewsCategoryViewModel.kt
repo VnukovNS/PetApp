@@ -13,8 +13,9 @@ interface NewsCategoryViewModel : Navigate {
     class Base(
         private val navigation: NavigationCommunication.Mutable,
         private val choosenCategory: ChooseCategory.Mutable,
-        private val communication: NewsCategoryCommunication
-    ) : BaseViewModel(), NewsCategoryViewModel, Init, Communication.Observe<NewsCategoryUi> {
+        private val communication: NewsCategoryCommunication,
+        dispatchers: DispatchersList
+    ) : BaseViewModel(dispatchers), NewsCategoryViewModel, Init, Communication.Observe<NewsCategoryUi> {
 
         override fun init() {
             communication.map(NewsCategoryUi.Initial())

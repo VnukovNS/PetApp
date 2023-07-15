@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class BaseViewModel(
-    private val dispatchers : DispatchersList = DispatchersList.Base()
+    private val dispatchers : DispatchersList
 ): ViewModel(), Handle {
     override fun <T : Any> handle(
         block: suspend () -> T,

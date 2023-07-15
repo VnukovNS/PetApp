@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val detailNewsModule = module {
     viewModel<DetailNewsViewModel.Base> {
-        DetailNewsViewModel.Base(data = get(), communication = get())
+        DetailNewsViewModel.Base(data = get(), communication = get(), dispatchers = get())
     }
 
     factory<Communication.Mutable<DetailsNewsUi>> {

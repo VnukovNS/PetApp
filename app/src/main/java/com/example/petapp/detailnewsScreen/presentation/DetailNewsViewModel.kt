@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.example.petapp.core.BaseViewModel
 import com.example.petapp.core.presentation.Init
 import com.example.petapp.core.presentation.Communication
+import com.example.petapp.core.presentation.DispatchersList
 import com.example.petapp.detailnewsScreen.domain.DetailsNewsUiMapper
 import com.example.petapp.newsListScreen.data.cache.NewsList
 
@@ -12,8 +13,9 @@ interface DetailNewsViewModel {
 
     class Base(
         private val data: NewsList.Mutable,
-        private val communication: Communication.Mutable<DetailsNewsUi>
-    ) : BaseViewModel(), Init, Communication.Observe<DetailsNewsUi> {
+        private val communication: Communication.Mutable<DetailsNewsUi>,
+        dispatchers: DispatchersList
+    ) : BaseViewModel(dispatchers), Init, Communication.Observe<DetailsNewsUi> {
         override fun init() {
             communication.map(data.read().map(DetailsNewsUiMapper(data.readImage())))
         }

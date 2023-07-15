@@ -20,17 +20,19 @@ interface NewsListViewModel : Navigate {
 
     class Base(
         private val interactor: NewsInteractor,
-        private val communication: Communication.Mutable<NewsUi>,
+        private val communication: NewsListCommunication,
         private val errorCommunication: ErrorCommunication,
         private val errorMapper: NewsUiErrorMapper,
         private val data: ChooseCategory.Mutable,
         private val navigationCommunication: NavigationCommunication.Mutable,
-        private val newsListData: NewsList.Mutable
+        private val newsListData: NewsList.Mutable,
+        dispatchers: DispatchersList
     ) :
-        BaseViewModel(), Communication.Observe<NewsUi>, NewsListViewModel {
+        BaseViewModel(dispatchers), Communication.Observe<NewsUi>, NewsListViewModel {
 
         override fun init(isFirstInit: Boolean) {
             if (isFirstInit) {
+                communication.map(NewsUi.Loading)
                 // мб делать хэндл в интеракторе?
                 handle({ interactor.getNews(data.read()) }, { result ->
                     if (result is NewsUi.Initial) {
