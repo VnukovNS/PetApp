@@ -34,6 +34,7 @@ interface NewsUi {
         override fun showProgressBar(progressBar: ProgressBar, context: Context) {
             progressBar.visibility = View.GONE
         }
+        // todo добавить базовое отображение ошибки, чтобы можно было повторить запрос
 
     }
 

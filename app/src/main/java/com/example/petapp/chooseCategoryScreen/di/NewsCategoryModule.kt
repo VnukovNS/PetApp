@@ -11,7 +11,8 @@ val newsCategoryModule = module {
         NewsCategoryViewModel.Base(
             navigation = get(),
             choosenCategory = get(),
-            communication = get()
+            communication = get(),
+            dispatchers = get()
         )
     }
 

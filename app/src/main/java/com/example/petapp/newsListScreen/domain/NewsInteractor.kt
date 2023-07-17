@@ -1,6 +1,5 @@
 package com.example.petapp.newsListScreen.domain
 
-import android.util.Log
 import com.example.petapp.core.data.cloud.coil.ImageDownload
 import com.example.petapp.core.data.cloud.errors.ExceptionsFactory
 import com.example.petapp.newsListScreen.data.cache.NewsList
@@ -24,6 +23,7 @@ interface NewsInteractor {
                 val resultUi =
                     result.map {
                         it.map(
+                            // todo подумать как убрать мапперы в аргументы, чтобы было тестируемо
                             NewsDataNewsPreviewUiMapper(
                                 //todo подумать как ускорить, мб создать кучу корутин
                                 imageDownload.getImage(
@@ -37,7 +37,6 @@ interface NewsInteractor {
 
                 NewsUi.Initial(resultUi)
             } catch (e: Exception) {
-                Log.e("vniks", "error: ${e.message}")
                 val message = failureHandler.handle(e)
                 NewsUi.Error(message)
             }

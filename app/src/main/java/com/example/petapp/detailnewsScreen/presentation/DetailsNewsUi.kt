@@ -9,7 +9,6 @@ import com.example.petapp.core.presentation.coil.ImageDownloadResult
 interface DetailsNewsUi {
 
     fun map(
-        progress: ProgressBar,
         titleView: TextView,
         imageView: ImageView,
         contentView: TextView,
@@ -17,6 +16,8 @@ interface DetailsNewsUi {
         dateView: TextView,
         readMoreView: TextView
     )
+
+    fun showProgressBar(progress: ProgressBar)
 
     abstract class Abstract(
         protected val title: String,
@@ -29,7 +30,6 @@ interface DetailsNewsUi {
         protected abstract val progressVisibility: Int
 
         override fun map(
-            progress: ProgressBar,
             titleView: TextView,
             imageView: ImageView,
             contentView: TextView,
@@ -43,11 +43,28 @@ interface DetailsNewsUi {
             authorView.text = author
             dateView.text = date
             readMoreView.text = readMore
+        }
+
+        override fun showProgressBar(progress: ProgressBar) {
             progress.visibility = progressVisibility
         }
     }
 
+    object Loading : DetailsNewsUi {
+        override fun map(
+            titleView: TextView,
+            imageView: ImageView,
+            contentView: TextView,
+            authorView: TextView,
+            dateView: TextView,
+            readMoreView: TextView
+        ) = Unit
 
+        override fun showProgressBar(progress: ProgressBar) {
+            progress.visibility = View.VISIBLE
+        }
+
+    }
     class Initial(
         title: String,
         image: ImageDownloadResult,

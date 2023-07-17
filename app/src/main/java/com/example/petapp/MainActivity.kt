@@ -8,19 +8,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    // пока что не нужна, скорее всего в нее уйдет навигация
     private val viewModel by viewModel<MainActivityViewModel.Base>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
-        viewModel.observe(this){
+        viewModel.observe(this) {
             it.navigate(supportFragmentManager, binding.container.id)
         }
 
-        if (savedInstanceState == null) {
-            viewModel.navigate(FirstScreen)
-        }
+        viewModel.navigate(FirstScreen)
     }
 }

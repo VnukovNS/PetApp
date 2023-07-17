@@ -1,6 +1,5 @@
 package com.example.petapp.newsListScreen
 
-import com.example.petapp.core.presentation.Communication
 import com.example.petapp.newsListScreen.data.cloud.NewsCloudDataSource
 import com.example.petapp.newsListScreen.data.cloud.NewsMakeService
 import com.example.petapp.newsListScreen.data.cloud.NewsService
@@ -23,11 +22,12 @@ val newsModule = module {
             errorMapper = get(),
             data = get(),
             navigationCommunication = get(),
-            newsListData = get()
+            newsListData = get(),
+            dispatchers = get()
         )
     }
 
-    factory<Communication.Mutable<NewsUi>> {
+    factory<NewsListCommunication> {
         NewsListCommunication.Base()
     }
 

@@ -20,7 +20,8 @@ import org.koin.dsl.module
 val coreModule = module {
 
     viewModel<MainActivityViewModel.Base> {
-        MainActivityViewModel.Base(navigationCommunication = get())
+        MainActivityViewModel.Base(navigationCommunication = get(),
+        dispatchers = get())
     }
 
     factory<ProvideOkHttpClientBuilder> {
@@ -45,7 +46,7 @@ val coreModule = module {
         ManageResources.Base(context = get())
     }
 
-    factory<DispatchersList> {
+    single<DispatchersList> {
         DispatchersList.Base()
     }
 
