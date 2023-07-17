@@ -4,12 +4,9 @@ import com.example.petapp.BaseTest
 import com.example.petapp.chooseCategoryScreen.data.ChooseCategory
 import com.example.petapp.core.presentation.NavigationCommunication
 import com.example.petapp.core.presentation.Screen
-import com.example.petapp.core.presentation.coil.ImageDownloadResult
 import com.example.petapp.detailnewsScreen.presentation.DetailNewsScreen
 import com.example.petapp.newsListScreen.NewsUi
 import com.example.petapp.newsListScreen.NewsUiErrorMapper
-import com.example.petapp.newsListScreen.data.cache.NewsList
-import com.example.petapp.newsListScreen.data.cloud.NewsDataCloud
 import com.example.petapp.newsListScreen.domain.NewsInteractor
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -50,57 +47,53 @@ class NewsListViewModelTest : BaseTest() {
     fun `test first run initial success`() = runBlocking {
         interactor.changeExpected(NewsUi.Initial(emptyList()))
         data.save("test") // подумать как убрать, сейчас впустую тестируем
-        data.sameSave("test")
         viewModel.init(true)
         communication.same(NewsUi.Loading)
-        data.sameRead("test")
+        data.same("test")
         interactor.same(NewsUi.Initial(emptyList()))
-        functionsCallsStack.checkStack(5)
+        functionsCallsStack.checkStack(4)
     }
 
     @Test
     fun `test first run initial error`() = runBlocking {
         interactor.changeExpected(NewsUi.Error("error"))
         data.save("test") // подумать как убрать, сейчас впустую тестируем
-        data.sameSave("test")
         viewModel.init(true)
         communication.same(NewsUi.Loading)
-        data.sameRead("test")
+        data.same("test")
         interactor.same(NewsUi.Error("error"))
         communication.same(NewsUi.Error("error"))
         errorCommunication.same("error")
-        functionsCallsStack.checkStack(6)
+        functionsCallsStack.checkStack(5)
     }
 
     @Test
     fun `test not first run initial success`() = runBlocking {
         interactor.changeExpected(NewsUi.Initial(emptyList()))
         data.save("test") // подумать как убрать, сейчас впустую тестируем
-        data.sameSave("test")
         viewModel.init(true)
         communication.same(NewsUi.Loading)
-        data.sameRead("test")
+        data.same("test")
         interactor.same(NewsUi.Initial(emptyList()))
         viewModel.init(false)
         communication.same(NewsUi.Initial(emptyList()))
-        functionsCallsStack.checkStack(5)
+        functionsCallsStack.checkStack(4)
     }
 
     @Test
     fun `test not first run initial error`() = runBlocking {
         interactor.changeExpected(NewsUi.Error("error"))
         data.save("test") // подумать как убрать, сейчас впустую тестируем
-        data.sameSave("test")
         viewModel.init(true)
         communication.same(NewsUi.Loading)
-        data.sameRead("test")
+        data.same("test")
         interactor.same(NewsUi.Error("error"))
         communication.same(NewsUi.Error("error"))
         errorCommunication.same("error")
         viewModel.init(false)
         // ничего не происходит, поскольку сейчас просто вываливается тоаст и потом пустой экран при повороте
         // нет стейта
-        functionsCallsStack.checkStack(6)
+        functionsCallsStack.checkStack(5)
     }
 
     @Test
@@ -113,7 +106,8 @@ class NewsListViewModelTest : BaseTest() {
     @Test
     fun `save id`() {
         viewModel.saveNewsDataId(123)
-        newsListData.same(123)
+        newsListData.checkSaveIdCalled()
+        newsListData.sameSaveId(123)
         functionsCallsStack.checkStack(1)
     }
 
@@ -221,26 +215,18 @@ class NewsListViewModelTest : BaseTest() {
 
     private interface FakeChooseCategory : ChooseCategory.Mutable {
 
-        fun sameRead(other: String)
-
-        fun sameSave(other: String)
+        fun same(other: String)
 
         class Base(private val functionCallsStack: FunctionsCallsStack) : FakeChooseCategory {
 
             private var testString = "testString"
 
-            override fun sameSave(other: String) {
-                assertEquals(testString, other)
-                functionCallsStack.checkCalled(CHOOSE_CATEGORY_SAVE_CALLED)
-            }
-
-            override fun sameRead(other: String) {
+            override fun same(other: String) {
                 assertEquals(testString, other)
                 functionCallsStack.checkCalled(CHOOSE_CATEGORY_READ_CALLED)
             }
 
             override fun save(data: String) {
-                functionCallsStack.put(CHOOSE_CATEGORY_SAVE_CALLED)
                 testString = data
             }
 
@@ -251,45 +237,7 @@ class NewsListViewModelTest : BaseTest() {
         }
 
         companion object {
-            private const val CHOOSE_CATEGORY_SAVE_CALLED = "choosecategory#save"
             private const val CHOOSE_CATEGORY_READ_CALLED = "choosecategory#read"
-        }
-    }
-
-    private interface FakeNewsList : NewsList.Mutable {
-
-        fun same(other: Int)
-
-        class Base(private val functionCallsStack: FunctionsCallsStack) : FakeNewsList {
-
-            private val list = mutableListOf<Int>()
-            private var index = 0
-
-            override fun same(other: Int) {
-                assertEquals(list[index++], other)
-                functionCallsStack.checkCalled(SAVE_ID_CALLED)
-            }
-
-            override fun save(
-                data: List<NewsDataCloud.Base>,
-                customImageResultList: List<ImageDownloadResult>
-            ) {
-            }
-
-            override fun saveId(id: Int) {
-                functionCallsStack.put(SAVE_ID_CALLED)
-                list.add(id)
-            }
-
-            override fun read(): NewsDataCloud.Base = NewsDataCloud.Base()
-
-            override fun readImage(): ImageDownloadResult = ImageDownloadResult.Error
-
-
-        }
-
-        companion object {
-            private const val SAVE_ID_CALLED = "saveid"
         }
     }
 }

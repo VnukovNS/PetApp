@@ -13,10 +13,11 @@ interface DetailNewsViewModel {
 
     class Base(
         private val data: NewsList.Mutable,
-        private val communication: Communication.Mutable<DetailsNewsUi>,
+        private val communication: NewsDetailCommunication,
         dispatchers: DispatchersList
     ) : BaseViewModel(dispatchers), Init, Communication.Observe<DetailsNewsUi> {
         override fun init() {
+            communication.map(DetailsNewsUi.Loading)
             communication.map(data.read().map(DetailsNewsUiMapper(data.readImage())))
         }
 

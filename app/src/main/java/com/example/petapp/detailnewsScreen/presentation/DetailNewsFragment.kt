@@ -22,7 +22,6 @@ class DetailNewsFragment : BaseFragment<DetailNewsFragmentBinding>() {
         viewModel.observe(this) {
             with(binding) {
                 it.map(
-                    progressBar,
                     newsTitle,
                     newsImage,
                     newsContent,
@@ -30,6 +29,7 @@ class DetailNewsFragment : BaseFragment<DetailNewsFragmentBinding>() {
                     newsDate,
                     newsReadMore
                 )
+                it.showProgressBar(progressBar)
             }
         }
 
