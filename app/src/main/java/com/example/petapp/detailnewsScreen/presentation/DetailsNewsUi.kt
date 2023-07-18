@@ -1,9 +1,13 @@
 package com.example.petapp.detailnewsScreen.presentation
 
+import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
+import com.example.petapp.R
 import com.example.petapp.core.presentation.coil.ImageDownloadResult
 
 interface DetailsNewsUi {
@@ -14,7 +18,8 @@ interface DetailsNewsUi {
         contentView: TextView,
         authorView: TextView,
         dateView: TextView,
-        readMoreView: TextView
+        readMoreView: TextView,
+        context: Context
     )
 
     fun showProgressBar(progress: ProgressBar)
@@ -35,14 +40,19 @@ interface DetailsNewsUi {
             contentView: TextView,
             authorView: TextView,
             dateView: TextView,
-            readMoreView: TextView
+            readMoreView: TextView,
+            context: Context
         ) {
             titleView.text = title
             image.showImage(imageView)
             contentView.text = content
             authorView.text = author
             dateView.text = date
-            readMoreView.text = readMore
+            readMoreView.text = HtmlCompat.fromHtml(
+                context.getString(R.string.less, readMore),
+                HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
+            readMoreView.movementMethod = LinkMovementMethod.getInstance()
         }
 
         override fun showProgressBar(progress: ProgressBar) {
@@ -57,7 +67,8 @@ interface DetailsNewsUi {
             contentView: TextView,
             authorView: TextView,
             dateView: TextView,
-            readMoreView: TextView
+            readMoreView: TextView,
+            context: Context
         ) = Unit
 
         override fun showProgressBar(progress: ProgressBar) {
@@ -65,6 +76,7 @@ interface DetailsNewsUi {
         }
 
     }
+
     class Initial(
         title: String,
         image: ImageDownloadResult,
