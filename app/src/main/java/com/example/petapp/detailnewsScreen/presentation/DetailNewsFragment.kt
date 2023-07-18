@@ -27,7 +27,8 @@ class DetailNewsFragment : BaseFragment<DetailNewsFragmentBinding>() {
                     newsContent,
                     newsAuthor,
                     newsDate,
-                    newsReadMore
+                    newsReadMore,
+                    requireContext()
                 )
                 it.showProgressBar(progressBar)
             }
